@@ -24,28 +24,54 @@ export default function App({ navigation }) {
     getToken();
   }, []);
 
+  const sendPushNotification = async (title, text) => {
+    const apiKey =
+      "AAAAVJ1MBSY:APA91bHWKwAIFNVVB7ECzftqyk-JYIh2TMmEn1-I1RJLIh0QYLu65oQQloOic6sBHGcWf-WVv7sLFKOXK41DIBGI1Sz5pRf6Sh9IiVzN_5W2ZZUYN0SI75GvcLl-Tvg8k8ome-r3ZG-M";
+    const url = "https://fcm.googleapis.com/fcm/send";
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `key=${apiKey}`,
+    };
+
+    const body = JSON.stringify({
+      notification: {
+        title,
+        text,
+      },
+      data: {
+        "<some_key>": "<some_value>",
+      },
+      to: "/topics/anytopic",
+    });
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: body,
+      });
+
+      console.log("FCM API response:", response);
+    } catch (error) {
+      console.error("Error sending FCM push notification:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
 
       <Text>FCM Test Application</Text>
       <Button
-        title="ALERT LOCAL NOTIFY 2"
-        onPress={() =>
-          onDisplayNotification({
-            title: "Notification Title",
-            body: "Main body content of the notification",
-          })
-        }
+        title="SUBSCRIBE"
+        onPress={async () => await messaging().subscribeToTopic("anytopic")}
       />
 
       <Button
-        title="ALERT LOCAL NOTIFY 2"
+        title="SEND NOTIFICATION"
         onPress={() =>
-          onDisplayNotification({
-            title: "Notification Title 2",
-            body: "Main body content of the notification 2",
-          })
+          sendPushNotification("Testing Title", "Testing notification text")
         }
       />
     </View>
