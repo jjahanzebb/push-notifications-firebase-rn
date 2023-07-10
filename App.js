@@ -26,7 +26,7 @@ export default function App({ navigation }) {
 
   const sendPushNotification = async (title, text) => {
     const apiKey =
-      "AAAAVJ1MBSY:APA91bHWKwAIFNVVB7ECzftqyk-JYIh2TMmEn1-I1RJLIh0QYLu65oQQloOic6sBHGcWf-WVv7sLFKOXK41DIBGI1Sz5pRf6Sh9IiVzN_5W2ZZUYN0SI75GvcLl-Tvg8k8ome-r3ZG-M";
+      "ENTER YOUR FIREBASE PROJECT SERVER KEY HERE";
     const url = "https://fcm.googleapis.com/fcm/send";
 
     const headers = {
